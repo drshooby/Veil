@@ -18,15 +18,23 @@ def blur(locations, image):
     image[y:y + height, x:x + width] = blurred
     return image
 
-# def convert_video_to_frames(video_name):
-#     cap = cv2.VideoCapture(video_name)
-#     while cap.isOpened():
-
+def convert_video_to_frames(video_name):
+    cap = cv2.VideoCapture(video_name)
+    frames = []
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if not ret:
+            break
+        frames.append(frame)
+    cap.release()
+    return frames
 
 if __name__ == "__main__":
-    image = cv2.imread("person.jpg")
-    faces = model_detect(image)
-    blur(faces[0], image)
 
-    plt.imshow(image)
-    plt.show()
+    # image = cv2.imread("person.jpg")
+    convert_video_to_frames("test.MP4")
+    # faces = model_detect(image)
+    # blur(faces[0], image)
+    #
+    # plt.imshow(image)
+    # plt.show()
