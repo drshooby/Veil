@@ -15,7 +15,7 @@ class ModelSetup:
         image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         boxes, probs = self.model.detect(image_rgb)
         faces = []
-        if boxes:
+        if boxes is not None:
             for i, box in enumerate(boxes):
                 faces.append({
                     'box': box,
