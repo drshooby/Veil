@@ -18,7 +18,7 @@ def blur(locations, image):
 def convert_video_to_frames(video_name) -> list:
     cap = cv2.VideoCapture(video_name)
     frame_list = []
-    while cap.isOpened() and len(frame_list) != 5:
+    while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
             break
@@ -34,13 +34,21 @@ def apply_blur(video_frames: list) -> list:
             blurred_frames.append(blur(face, frame))
     return blurred_frames
 
+def reassemble_blurred_frames(video_frames: list, outfile) -> list:
+    first_frame = video_frames[0]
+    height, width, _ = first_frame.shape
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    video = cv2.VideoWriter(outfile, fourcc, 30.0, (width, height))
+    for frame in video_frames:
+        video.write(frame)
+    video.release()
+
 if __name__ == "__main__":
 
     # image = cv2.imread("person.jpg")
-    frames = convert_video_to_frames("test2.mp4")
-    v_frames = apply_blur(frames)
-    plt.imshow(v_frames[0])
-    plt.show()
+    # frames = convert_video_to_frames("test2.mp4")
+    # v_frames = apply_blur(frames)
+    # reassemble_blurred_frames(v_frames, outfile="output2.mp4")
     # faces = model_detect(image)
     # blur(faces[0], image)
     #
