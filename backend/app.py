@@ -8,7 +8,7 @@ app = Flask(__name__)
 def index():
     return 'Hello World!'
 # CORS(app)
-#
+# docker build -t my-backend-image .
 # model = ModelSetup()
 #
 # UPLOAD_FOLDER = 'uploads'
