@@ -102,8 +102,8 @@ const VideoUpload = () => {
       {videoFile && !loading && !uploadSuccess && !uploadError && (
         <div className="centered-container">
           <p>Video selected: {videoFile.name}</p>
-          <button onClick={handleSubmit}>SUBMIT</button>
-          <button onClick={handleRefresh}>BACK</button>
+          <motion.button whileTap={{ scale: 0.8 }} onClick={handleSubmit}>SUBMIT</motion.button>
+          <motion.button whileTap={{ scale: 0.8 }} onClick={handleRefresh}>BACK</motion.button>
         </div>
       )}
 
@@ -123,16 +123,16 @@ const VideoUpload = () => {
       {uploadSuccess && (
         <div className="success-message">
           <a href={downloadLink} download={videoName}>
-            <button>DOWNLOAD</button>
+            <motion.button whileTap={{ scale: 0.8 }}>DOWNLOAD</motion.button>
           </a>
-          <button onClick={handleRefresh}>BACK</button>
+          <motion.button whileTap={{ scale: 0.8 }} onClick={handleRefresh}>BACK</motion.button>
         </div>
       )}
 
       {uploadError && (
         <div className="error-message">
           <p>{uploadError}</p>
-          <button onClick={handleRefresh}>BACK</button>
+          <motion.button whileTap={{ scale: 0.8 }} onClick={handleRefresh}>BACK</motion.button>
         </div>
       )}
     </div>
