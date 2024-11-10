@@ -80,14 +80,15 @@ const VideoUpload = () => {
       {!loading && !videoFile && !uploadSuccess && !uploadError && (
         <div {...getRootProps()} className="dropzone">
           <input {...getInputProps()} />
-          <p>Drag & drop a video file, or click to select one</p>
+          <p>Drag & drop a video file, or click to upload one.</p>
         </div>
       )}
 
       {videoFile && !loading && !uploadSuccess && !uploadError && (
-        <div>
+        <div className="centered-container">
           <p>Video Selected: {videoFile.name}</p>
-          <button onClick={handleSubmit}>Submit</button>
+          <button onClick={handleSubmit}>SUBMIT</button>
+          <button onClick={handleRefresh}>REFRESH</button>
         </div>
       )}
 
@@ -106,14 +107,15 @@ const VideoUpload = () => {
 
       {uploadSuccess && (
         <div className="success-message">
-          <p>Upload successful! Your video has been submitted.</p>
+          <p>Upload successful!</p>
+          <button onClick={handleRefresh}>REFRESH</button>
         </div>
       )}
 
       {uploadError && (
         <div className="error-message">
           <p>{uploadError}</p>
-          <button onClick={handleRefresh}>Refresh Page</button>
+          <button onClick={handleRefresh}>REFRESH</button>
         </div>
       )}
     </div>

@@ -1,33 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap');
+
 body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(to right, #141d25, #070a0c);
-  color: white;
+  font-family: monospace, sans-serif;
+  background: linear-gradient(to right, rgb(28, 45, 58), #0c1216);
+  color: #c1d6db;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0;
+  transition: background 1s ease;
+}
+
+h1, h2, h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3rem);
+  transition: font-size 1s ease;
+}
+
+p {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  transition: font-size 1s ease;
 }
 
 .container {
   width: 100%;
   max-width: 600px;
   text-align: center;
-}
-
-h1 {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  color: #ecf0f1;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: max-width 1s ease;
 }
 
 .dropzone {
-  border: 2px dashed #ffffff;
-  padding: 50px;
+  border: 2px dashed #c1d6db;
+  padding: 40px;
   cursor: pointer;
   background-color: #1a252f;
-  color: #ecf0f1;
+  color: #c1d6db;
   border-radius: 15px;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  transition: background-color 1s ease, font-size 1s ease;
 }
 
 .dropzone:hover {
@@ -36,11 +52,13 @@ h1 {
 
 button {
   background-color: #0f2e43;
-  color: white;
+  color: #c1d6db;
   padding: 10px 20px;
   border: none;
   cursor: pointer;
   border-radius: 15px;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  transition: background-color 1s ease, font-size 1s ease;
 }
 
 button:hover {
@@ -51,16 +69,25 @@ button:hover {
   width: 100%;
   max-width: 500px;
   margin-bottom: 20px;
+  transition: width 1s ease, max-width 1s ease;
 }
 
 .result a {
   background-color: #2980b9;
-  color: white;
+  color: #c1d6db;
   padding: 10px 20px;
   text-decoration: none;
   border-radius: 5px;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  transition: background-color 1s ease, font-size 1s ease;
 }
 
 .result a:hover {
-  background-color: #1f639b;
+  background-color: #34495e;
+}
+
+.centered-container {
+  display: grid;
+  place-items: center;
+  gap: 15px;
 }
