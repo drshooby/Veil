@@ -71,3 +71,39 @@ const VideoUpload = () => {
   const handleRefresh = () => {
     window.location.reload();
   };
+
+  return (
+    <div className="upload-container">
+      {!loading && !videoFile && !uploadSuccess && !uploadError && (
+        <div {...getRootProps()} className="dropzone">
+          <input {...getInputProps()} />
+          <p>Drag & drop a video file, or click to select one</p>
+        </div>
+      )}
+
+      {videoFile && !loading && !uploadSuccess && !uploadError && (
+        <div>
+          <p>Video Selected: {videoFile.name}</p>
+          <button onClick={handleSubmit}>Submit</button>
+        </div>
+      )}
+
+      {loading && <p>Processing your video...</p>}
+
+      {uploadSuccess && (
+        <div className="success-message">
+          <p>Upload successful! Your video has been submitted.</p>
+        </div>
+      )}
+
+      {uploadError && (
+        <div className="error-message">
+          <p>{uploadError}</p>
+          <button onClick={handleRefresh}>Refresh Page</button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default VideoUpload;
