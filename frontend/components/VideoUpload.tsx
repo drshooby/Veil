@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
+import GridLoader from "react-spinners/GridLoader";
 
 const VideoUpload = () => {
   const [loading, setLoading] = useState(false);
@@ -88,7 +89,18 @@ const VideoUpload = () => {
         </div>
       )}
 
-      {loading && <p>Processing your video...</p>}
+      {loading && (
+        <>
+          <GridLoader
+            color="#c1d6db"
+            loading={loading}
+            margin={10}
+            size={20}
+            speedMultiplier={1}
+          />
+          <p>Processing...</p>
+        </>
+      )}
 
       {uploadSuccess && (
         <div className="success-message">
