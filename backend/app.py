@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import os
 
@@ -9,8 +9,6 @@ from modelsetup import ModelSetup
 app = Flask(__name__)
 CORS(app)
 
-model = ModelSetup()
-
 UPLOAD_FOLDER = 'uploads'
 PROCESSED_FOLDER = 'processed'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -18,6 +16,8 @@ app.config['PROCESSED_FOLDER'] = PROCESSED_FOLDER
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(PROCESSED_FOLDER, exist_ok=True)
+
+model = ModelSetup()
 
 @app.route('/')
 def index():
@@ -36,7 +36,11 @@ def upload():
         video_file.save(input_filepath)
         model.set_input_filename(input_filepath)
         model.run_steps(input_filepath)
-        return jsonify({'message': 'Input file uploaded successfully'}), 200
+        return send_from_directory(
+            app.config['PROCESSED_FOLDER'],
+            "veiled.mp4",
+            as_attachment=True  # This makes the file downloadable
+        )
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     finally:

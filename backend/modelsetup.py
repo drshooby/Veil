@@ -10,11 +10,12 @@ class ModelSetup:
     def __init__(self):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = MTCNN(keep_all=True, device=self.device)
-        self.input_filename = "input_file"
-        self.output_path = os.path.join(current_app.config["PROCESSED_FOLDER"], "veiled.mp4")
+        self.input_filename = None
+        self.output_path = None
 
     def set_input_filename(self, input_file):
         self.input_filename = input_file
+        self.output_path = os.path.join(current_app.config["PROCESSED_FOLDER"], "veiled.mp4")
 
     def model_detect(self, image) -> list:
         image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
