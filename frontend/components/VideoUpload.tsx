@@ -55,13 +55,25 @@ const VideoUpload = () => {
             const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
             console.log(`Upload Progress: ${percent}%`);
           }
-        }
+        },
+        responseType: 'blob',
       });
 
       // Handle success response
-      if (response.status === 200 && response.data.message) {
+      if (response.status === 200) {
         setUploadSuccess(true);
         setVideoFile(null); // Clear the selected file
+
+        // Create a download link for the processed video
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'veiled_' + videoFile.name);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        console.log('Video downloaded successfully');
       }
     } catch (error) {
       console.error('Upload failed', error);
@@ -86,9 +98,9 @@ const VideoUpload = () => {
 
       {videoFile && !loading && !uploadSuccess && !uploadError && (
         <div className="centered-container">
-          <p>Video Selected: {videoFile.name}</p>
+          <p>Video selected: {videoFile.name}</p>
           <button onClick={handleSubmit}>SUBMIT</button>
-          <button onClick={handleRefresh}>REFRESH</button>
+          <button onClick={handleRefresh}>BACK</button>
         </div>
       )}
 
@@ -107,8 +119,8 @@ const VideoUpload = () => {
 
       {uploadSuccess && (
         <div className="success-message">
-          <p>Upload successful!</p>
-          <button onClick={handleRefresh}>REFRESH</button>
+          <p>Upload successful.</p>
+          <button onClick={handleRefresh}>BACK</button>
         </div>
       )}
 
