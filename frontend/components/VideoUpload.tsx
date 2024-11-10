@@ -12,10 +12,12 @@ const VideoUpload = () => {
 
   // Dynamically set the backend URL only on the client side
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (window.location.hostname === 'localhost') {
+      setBackendUrl('http://localhost:8080/upload');
+    } else if (typeof window !== 'undefined') {
       setBackendUrl(`${window.location.origin}/upload`);
     } else {
-      setBackendUrl('http://localhost:8080/upload');
+      console.error('Window object not found');
     }
   }, []);
 
