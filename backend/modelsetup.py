@@ -1,11 +1,9 @@
-import os.path
-
 from facenet_pytorch import MTCNN
+from flask import current_app
 import cv2
 import concurrent.futures
 import torch
-from flask import current_app
-
+import os.path
 
 class ModelSetup:
 
@@ -15,19 +13,25 @@ class ModelSetup:
         self.input_filename = "input_file"
         self.output_path = os.path.join(current_app.config["PROCESSED_FOLDER"], f"{self.input_filename}_veiled.mp4")
 
+    def set_input_filename(self, input_file):
+        self.input_filename = input_file
+
     def model_detect(self, image) -> list:
         image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         boxes, probs = self.model.detect(image_rgb)
         faces = []
         if boxes is not None:
             for i, box in enumerate(boxes):
+                # really only the bounding box is used for location
+                # but confidence is a nice metric to have for debugging
                 faces.append({
                     'box': box,
                     'confidence': probs[i]
                 })
         return faces
 
-    def blur(self, locations, image):
+    @staticmethod
+    def blur_single_frame(locations, image):
         x1, y1, x2, y2 = map(int, locations['box'])
         roi = image[y1:y2, x1:x2]
         # KERNEL SIZE MUST BE AN ODD NUMBER (note: bigger number (stronger blur) = more processing)
@@ -38,22 +42,15 @@ class ModelSetup:
     def apply_blur(self, frame):
         faces = self.model_detect(frame)
         for face in faces:
-            frame = self.blur(face, frame)
+            # frame only gets updated 'if' something is detected
+            frame = self.blur_single_frame(face, frame)
         return frame
 
     def process_frame(self, frame):
         return self.apply_blur(frame)
 
-    def reassemble_blurred_frames(self, video_frames: list):
-        first_frame = video_frames[0]
-        height, width, _ = first_frame.shape
-        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-        video = cv2.VideoWriter(self.output_path, fourcc, 30.0, (width, height))
-        for frame in video_frames:
-            video.write(frame)
-        video.release()
-
-    def convert_video_to_frames(self, video_name) -> list:
+    @staticmethod
+    def convert_video_to_frames(video_name) -> list:
         cap = cv2.VideoCapture(video_name)
         frame_list = []
         while cap.isOpened():
@@ -64,8 +61,15 @@ class ModelSetup:
         cap.release()
         return frame_list
 
-    def set_input_filename(self, input_file):
-        self.input_filename = input_file
+    def reassemble_blurred_frames(self, video_frames: list):
+        first_frame = video_frames[0]
+        height, width, _ = first_frame.shape
+        fourcc = cv2.VideoWriter_fourcc(*'mp4v') # might give warning about missing reference, should still work fine
+        # 30fps, can make it higher, but it'll take longer to process
+        video = cv2.VideoWriter(self.output_path, fourcc, 30.0, (width, height))
+        for frame in video_frames:
+            video.write(frame)
+        video.release()
 
     def run_steps(self, input_file):
         video_frames = self.convert_video_to_frames(input_file)
