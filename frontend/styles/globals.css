@@ -52,6 +52,7 @@ p {
 
 button {
   background-color: #0f2e43;
+  min-width: 200px;
   color: #c1d6db;
   padding: 10px 20px;
   border: none;
