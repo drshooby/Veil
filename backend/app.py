@@ -33,6 +33,7 @@ def upload():
 
     input_filename = secure_filename(video_file.filename)
     input_filepath = os.path.join(app.config['UPLOAD_FOLDER'], input_filename)
+    output_filepath = os.path.join(app.config['PROCESSED_FOLDER'], "veiled.mp4")
 
     try:
         video_file.save(input_filepath)
@@ -44,12 +45,13 @@ def upload():
             as_attachment=True
         )
     except Exception as e:
+        print(e)
         return jsonify({'error': str(e)}), 500
     finally:
-        if os.path.exists(UPLOAD_FOLDER):
-            shutil.rmtree(UPLOAD_FOLDER)
-        if os.path.exists(PROCESSED_FOLDER):
-            shutil.rmtree(PROCESSED_FOLDER)
+        if os.path.exists(input_filepath):
+            os.remove(input_filepath)
+        if os.path.exists(output_filepath):
+            os.remove(output_filepath)
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=8080)

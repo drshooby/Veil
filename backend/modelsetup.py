@@ -35,6 +35,8 @@ class ModelSetup:
     def blur_single_frame(locations, image):
         x1, y1, x2, y2 = map(int, locations['box'])
         roi = image[y1:y2, x1:x2]
+        if roi.size == 0:
+            return image
         # KERNEL SIZE MUST BE AN ODD NUMBER (note: bigger number (stronger blur) = more processing)
         blurred = cv2.GaussianBlur(roi, (131, 131), 0)
         image[y1:y2, x1:x2] = blurred
