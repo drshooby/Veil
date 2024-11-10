@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 import GridLoader from "react-spinners/GridLoader";
+import { motion } from "framer-motion";
 
 const VideoUpload = () => {
   const [loading, setLoading] = useState(false);
@@ -11,6 +12,7 @@ const VideoUpload = () => {
   const [backendUrl, setBackendUrl] = useState<string>('');
   const [downloadLink, setDownloadLink] = useState<string>('');
   const [videoName, setVideoName] = useState<string>('veiled.mp4');
+  const text = "Who will you veil today?".split(" ");
 
   // Dynamically set the backend URL only on the client side
   useEffect(() => {
@@ -93,10 +95,27 @@ const VideoUpload = () => {
   return (
     <div className="upload-container">
       {!loading && !videoFile && !uploadSuccess && !uploadError && (
-        <div {...getRootProps()} className="dropzone">
-          <input {...getInputProps()} />
-          <p>Drag & drop a video file, or click to upload one.</p>
-        </div>
+        <>
+          {text.map((el, i) => (
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{
+                duration: 0.5,
+                delay: i / 5
+              }}
+              key={i}
+              style={{ display: 'inline-block', marginRight: '10px' }}
+            >
+              {el}{" "}
+            </motion.p>
+          ))}
+          <br /><br />
+          <div {...getRootProps()} className="dropzone">
+            <input {...getInputProps()} />
+            <p>Drag & drop a video file, or click to upload one.</p>
+          </div>
+        </>
       )}
 
       {videoFile && !loading && !uploadSuccess && !uploadError && (
