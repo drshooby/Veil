@@ -11,7 +11,7 @@ class ModelSetup:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = MTCNN(keep_all=True, device=self.device)
         self.input_filename = "input_file"
-        self.output_path = os.path.join(current_app.config["PROCESSED_FOLDER"], f"{self.input_filename}_veiled.mp4")
+        self.output_path = os.path.join(current_app.config["PROCESSED_FOLDER"], "veiled.mp4")
 
     def set_input_filename(self, input_file):
         self.input_filename = input_file
