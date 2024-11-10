@@ -24,7 +24,7 @@ const VideoUpload = () => {
   // Set up drag-and-drop functionality
   const { getRootProps, getInputProps } = useDropzone({
     accept: { 'video/*': [] },
-    maxSize: 1000000000, // 1 GB max size
+    maxSize: 52428800, // 50 MB max size
     onDrop: (acceptedFiles) => {
       setVideoFile(acceptedFiles[0]);
       setUploadError(null); // Reset error message if a new file is selected
