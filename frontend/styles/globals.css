@@ -91,3 +91,9 @@ button:hover {
   place-items: center;
   gap: 15px;
 }
+
+.success-message {
+  display: grid;
+  place-items: center;
+  gap: 15px;
+}

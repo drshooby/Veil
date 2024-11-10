@@ -9,6 +9,8 @@ const VideoUpload = () => {
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
   const [backendUrl, setBackendUrl] = useState<string>('');
+  const [downloadLink, setDownloadLink] = useState<string>('');
+  const [videoName, setVideoName] = useState<string>('veiled.mp4');
 
   // Dynamically set the backend URL only on the client side
   useEffect(() => {
@@ -45,7 +47,7 @@ const VideoUpload = () => {
     formData.append('video_file', videoFile);
 
     try {
-      // Send the video file to the Flask back-end
+      // Send the video file to the backend
       const response = await axios.post(backendUrl, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -59,21 +61,17 @@ const VideoUpload = () => {
         responseType: 'blob',
       });
 
-      // Handle success response
+      // Handle success response (assumes backend returns the video URL)
       if (response.status === 200) {
         setUploadSuccess(true);
+
+        // Create a URL for the processed video file returned by the backend
+        const processedVideoUrl = URL.createObjectURL(response.data);
+        setDownloadLink(processedVideoUrl);
+        setVideoName("veiled_" + videoFile?.name);
+
         setVideoFile(null); // Clear the selected file
-
-        // Create a download link for the processed video
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'veiled_' + videoFile.name);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-
-        console.log('Video downloaded successfully');
+        console.log('Video processed and ready for download');
       }
     } catch (error) {
       console.error('Upload failed', error);
@@ -84,7 +82,12 @@ const VideoUpload = () => {
   };
 
   const handleRefresh = () => {
-    window.location.reload();
+    // window.location.reload();
+    setLoading(false);
+    setVideoFile(null);
+    setUploadError(null);
+    setUploadSuccess(false);
+    setDownloadLink('');
   };
 
   return (
@@ -119,7 +122,9 @@ const VideoUpload = () => {
 
       {uploadSuccess && (
         <div className="success-message">
-          <p>Upload successful.</p>
+          <a href={downloadLink} download={videoName}>
+            <button>DOWNLOAD</button>
+          </a>
           <button onClick={handleRefresh}>BACK</button>
         </div>
       )}
@@ -127,7 +132,7 @@ const VideoUpload = () => {
       {uploadError && (
         <div className="error-message">
           <p>{uploadError}</p>
-          <button onClick={handleRefresh}>REFRESH</button>
+          <button onClick={handleRefresh}>BACK</button>
         </div>
       )}
     </div>
