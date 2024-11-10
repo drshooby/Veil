@@ -12,7 +12,8 @@ const VideoUpload = () => {
   const [backendUrl, setBackendUrl] = useState<string>('');
   const [downloadLink, setDownloadLink] = useState<string>('');
   const [videoName, setVideoName] = useState<string>('veiled.mp4');
-  const text = "Who will you veil today?".split(" ");
+  // const text = "Who will you veil today?".split(" ");
+  const text = "".split(" ");
 
   // Dynamically set the backend URL only on the client side
   useEffect(() => {

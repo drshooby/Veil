@@ -1,8 +1,8 @@
 # Veil
 
-[![Stack icons](https://skillicons.dev/icons?i=ts,next,flask,python,opencv)](https://skillicons.dev)
+## Veil is an app that automatically blurs faces in videos while keeping the rest of the content intact.
 
-# Veil is an app that automatically blurs faces in videos while keeping the rest of the content intact.
+[![Stack icons](https://skillicons.dev/icons?i=ts,next,flask,python,opencv)](https://skillicons.dev)
 
 ## Features
 - Detects and blurs faces in videos
