@@ -19,6 +19,14 @@ git clone git@github.com:drshooby/Veil.git
 cd Veil
 ```
 
+### 1a. Quickstart
+Run `start.sh` with Docker open:
+```bash
+$ chmod +x start.sh (for Unix systems)
+$ start.sh
+```
+To remove all containers run `delete_containers.sh`
+
 ### 2. Set up the Frontend
 Go to the `frontend` directory, install dependencies, and start the app:
 ```bash
