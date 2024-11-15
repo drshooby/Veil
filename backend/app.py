@@ -23,7 +23,7 @@ model = ModelSetup()
 
 @app.route('/')
 def index():
-    return 'Hello World!'
+    return 'Hi! This is a debug route'
 
 @app.route('/upload', methods=['POST'])
 def upload():
