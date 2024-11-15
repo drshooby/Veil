@@ -1,4 +1,4 @@
-# Use the official Python image from the Docker Hub as the base image
+# Use the official Python image from the Docker Hub
 FROM python:3.9-slim
 
 # Install system dependencies (including ffmpeg and OpenCV dependencies)
@@ -10,16 +10,14 @@ RUN apt-get update && \
     && apt-get clean
 
 # Set the working directory in the container
-WORKDIR /backend
+WORKDIR .
 
-# Copy the requirements.txt file into the container
+# Copy the requirements.txt file and install Python dependencies
 COPY requirements.txt .
-
-# Install Python dependencies (Flask, etc.)
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the entire backend directory into the container
-COPY backend/ /backend/
+COPY . .
 
 # Expose the port Flask will run on (default is 5000)
 EXPOSE 8080
