@@ -12,8 +12,7 @@ const VideoUpload = () => {
   const [backendUrl, setBackendUrl] = useState<string>('');
   const [downloadLink, setDownloadLink] = useState<string>('');
   const [videoName, setVideoName] = useState<string>('veiled.mp4');
-  // const text = "Who will you veil today?".split(" ");
-  const text = "".split(" ");
+  const text = "Drag & drop a video file, or click to upload one.".split(" ");
 
   // Dynamically set the backend URL only on the client side
   useEffect(() => {
@@ -114,7 +113,7 @@ const VideoUpload = () => {
           <br /><br />
           <div {...getRootProps()} className="dropzone">
             <input {...getInputProps()} />
-            <p>Drag & drop a video file, or click to upload one.</p>
+            <img src="VeilA.png" width="200" height="200" />
           </div>
         </>
       )}

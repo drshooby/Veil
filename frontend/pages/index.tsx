@@ -5,7 +5,6 @@ const Home = () => {
   return (
     <div className="container">
       <h1>Veil</h1>
-      {/* <Image src="/VeilA.png" alt="Veil Logo" width={240} height={240} /> */}
       <VideoUpload/>
     </div>
   );
