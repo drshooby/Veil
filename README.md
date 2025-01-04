@@ -2,7 +2,7 @@
 
 ## Veil is an app that automatically blurs faces in videos while keeping the rest of the content intact.
 
-### 2nd Place Winner - Deploy/24 Hackathon at USFCA
+### 2nd Place Winner - Deploy/24 Hackathon at USFCA 🎉
 * Awarded for creating an innovative solution that automates the blurring of faces in video content, prioritizing privacy and accessiblity.
 
 <img src="./frontend/public/VeilA.png" width="300" />
